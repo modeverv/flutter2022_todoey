@@ -1,47 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TodoTile extends StatefulWidget {
-  const TodoTile({Key? key}) : super(key: key);
-
-  @override
-  State<TodoTile> createState() => _TodoTileState();
-}
-
-class _TodoTileState extends State<TodoTile> {
-  bool checked = false;
+class TodoTile extends StatelessWidget {
+  final bool check;
+  final String name;
+  final void Function(bool?)? f;
+  TodoTile({required this.check, required this.name, this.f});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(
-        "aaaaa bbbbbb",
-        style: TextStyle(
-          decoration: checked ? TextDecoration.lineThrough : null,
+        title: Text(
+          name,
+          style: TextStyle(
+            decoration: check ? TextDecoration.lineThrough : null,
+          ),
         ),
-      ),
-      trailing: MyCheck(
-          check: checked,
-          f: (bool? newValue) {
-            setState(() {
-              checked = newValue!;
-            });
-          }),
-    );
-  }
-}
-
-class MyCheck extends StatelessWidget {
-  final void Function(bool?)? f;
-  final bool check;
-
-  const MyCheck({required this.check, this.f});
-
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      value: check,
-      onChanged: f,
-    );
+        trailing: Checkbox(
+          value: check,
+          onChanged: f,
+        ));
   }
 }
