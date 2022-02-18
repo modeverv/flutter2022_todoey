@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  Function(String) callBack;
-
-  AddTaskScreen({required this.callBack});
-
-  @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
-}
-
-class _AddTaskScreenState extends State<AddTaskScreen> {
-  TextEditingController textController = TextEditingController();
+class AddTaskScreen extends StatelessWidget {
+  final TextEditingController textController = TextEditingController();
   String taskName = "";
+
+  AddTaskScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,8 +49,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             FlatButton(
                 color: Colors.lightBlueAccent,
                 onPressed: () {
-                  widget.callBack(taskName);
+                  context.read<TaskData>().addTask(taskName);
                   textController.clear();
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   'Add',
